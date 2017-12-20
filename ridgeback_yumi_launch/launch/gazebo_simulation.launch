@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <launch>
 
-
+	<!-- ABB YuMi -->
 	<rosparam file="$(find yumi_control)/config/traj_controllers.yaml" command="load" ns="/yumi"/>
 	<rosparam file="$(find yumi_control)/config/gripper_controllers.yaml" command="load" ns="/yumi"/>
 	<arg name="arm_controllers" default="joint_state_controller 
 									 joint_traj_vel_controller_l
 									 joint_traj_vel_controller_r"/>
-	<arg name="gripper_controllers" default="gripper_effort_controller_r
-											 gripper_effort_controller_l"/>
+<!-- 	<arg name="gripper_controllers" default="gripper_effort_controller_r
+											 gripper_effort_controller_l"/> -->
 	<node name="arm_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg arm_controllers)" ns="/yumi"/>
-	<node name="gripper_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg gripper_controllers)" ns="/yumi"/>
+	<!-- <node name="gripper_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg gripper_controllers)" ns="/yumi"/> -->
 
     <arg name="yumi_initial_pos" default="-J yumi_joint_1_l -1.41 
     									  -J yumi_joint_2_l -2.1
@@ -35,7 +35,7 @@
 	
 
 
-
+	<!-- Clearpath Ridgeback -->
 	<rosparam command="load" file="$(find ridgeback_control)/config/control.yaml"/>
 	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization" />
 	<node pkg="topic_tools" type="relay" name="cmd_vel_relay"
@@ -73,6 +73,18 @@
   	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 	
 
+  	<!-- Spinning lidar -->
+    <rosparam file="$(find spinning_lidar_motor_control)/config/controllers.yaml" command="load" ns="spinning_lidar"/>
+	<arg name="spin_joint_controllers" default="spin_joint_states
+								 				spin_joint_vel_controller"/>
+	<node name="spinning_lidar_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg spin_joint_controllers)" ns="spinning_lidar"/>
+	<node name="spinning_lidar_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" > 
+    	<param name="publish_frequency" value="200.0"/>
+        <param name="use_tf_static" value="true"/>
+        <param name="ignore_timestamp" value="true"/>
+    </node>
+
+
 	<!-- URDF / SRDF parameters -->
 	<arg name="ridgeback_config" default="base" />
 	<include file="$(find ridgeback_yumi_description)/launch/description.launch">
@@ -88,6 +100,8 @@
 	<arg name="gui" default="true" />
 	<arg name="headless" default="false" />
 	<arg name="world_name" default="$(find ridgeback_gazebo)/worlds/ridgeback_race.world" />
+	<!-- <arg name="world_name" value="worlds/willowgarage.world"/> -->
+
   <!-- Launch Gazebo with the specified world -->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
 		<arg name="debug" value="$(arg debug)" />
