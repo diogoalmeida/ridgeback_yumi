@@ -73,6 +73,7 @@
   	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 	
 
+
   	<!-- Spinning lidar -->
     <rosparam file="$(find spinning_lidar_motor_control)/config/controllers.yaml" command="load" ns="spinning_lidar"/>
 	<arg name="spin_joint_controllers" default="spin_joint_states
@@ -83,6 +84,7 @@
         <param name="use_tf_static" value="true"/>
         <param name="ignore_timestamp" value="true"/>
     </node>
+
 
 
 	<!-- URDF / SRDF parameters -->
@@ -99,8 +101,8 @@
 	<arg name="use_sim_time" default="true" />
 	<arg name="gui" default="true" />
 	<arg name="headless" default="false" />
-	<arg name="world_name" default="$(find ridgeback_gazebo)/worlds/ridgeback_race.world" />
-	<!-- <arg name="world_name" value="worlds/willowgarage.world"/> -->
+	<!-- <arg name="world_name" default="$(find ridgeback_gazebo)/worlds/ridgeback_race.world" /> -->
+	<arg name="world_name" value="worlds/willowgarage.world"/>
 
   <!-- Launch Gazebo with the specified world -->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -111,6 +113,7 @@
 		<arg name="world_name" value="$(arg world_name)" />
 		<arg name="paused" value="false"/>
 	</include>
+
 
 
 	<param name="use_gui" value="true"/>
