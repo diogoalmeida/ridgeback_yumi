@@ -16,7 +16,7 @@
   <!--Import the yumi optodaq sensors macro -->
   <xacro:include filename="$(find yumi_description)/urdf/Extras/yumi_optodaq_sensors.xacro"/>
   <!-- Import Gazebo plugins -->
-  <xacro:include filename="$(find yumi_description)/urdf/Gazebo/gazebo.urdf.xacro"/>
+  <!-- <xacro:include filename="$(find yumi_description)/urdf/Gazebo/gazebo.urdf.xacro"/> -->
 
   <!-- Import spinning_lidar macro and Gazebo plugins -->
   <xacro:include filename="$(find spinning_lidar_description)/urdf/rotating_mounts/rotating_mount_v1.urdf.xacro" />
