@@ -29,6 +29,12 @@
         <link name="gripper_r_finger_r" />
         <link name="gripper_r_finger_l" />
     </group>
+    <group name="left_arm_optodaq">
+        <chain base_link="yumi_body" tip_link="optodaq_l_sensor_link" />
+    </group>
+    <group name="right_arm_optodaq">
+        <chain base_link="yumi_body" tip_link="optodaq_r_sensor_link" />
+    </group>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="left_gripper_ee" parent_link="gripper_l_base" group="left_gripper" parent_group="left_arm" />
     <end_effector name="right_gripper_ee" parent_link="gripper_r_base" group="right_gripper" parent_group="right_arm" />
