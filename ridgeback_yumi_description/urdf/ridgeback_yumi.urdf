@@ -1440,6 +1440,36 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <!--joint between {parent} and base-->
+  <joint name="gripper_r_base_joint_fold" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.21"/>
+    <parent link="gripper_r_base"/>
+    <child link="fold_case_object_link"/>
+  </joint>
+  <link name="fold_case_object_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.24" radius="0.06"/>
+      </geometry>
+      <material name="Orange"/>
+    </visual>
+  </link>
+  <!--joint between {parent} and base-->
+  <joint name="gripper_l_base_joint_rod" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.17"/>
+    <parent link="gripper_l_base"/>
+    <child link="rod_piece_object_link"/>
+  </joint>
+  <link name="rod_piece_object_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.16" radius="0.06"/>
+      </geometry>
+      <material name="Orange"/>
+    </visual>
+  </link>
   <joint name="ridgeback_base_to_pedestal" type="fixed">
     <origin rpy="0 0 3.14159265359" xyz="0.32 0 0.28"/>
     <parent link="base_link"/>

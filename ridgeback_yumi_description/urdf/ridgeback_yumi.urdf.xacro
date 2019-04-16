@@ -15,6 +15,9 @@
   <xacro:include filename="$(find yumi_description)/urdf/Grippers/yumi_servo_gripper.xacro"/>
   <!--Import the yumi optodaq sensors macro -->
   <xacro:include filename="$(find yumi_description)/urdf/Extras/yumi_optodaq_sensors.xacro"/>
+  <!--Import folding macros -->
+  <xacro:include filename="$(find yumi_description)/urdf/Extras/yumi_fold_case.xacro"/>
+  <xacro:include filename="$(find yumi_description)/urdf/Extras/yumi_rod.xacro"/>
   <!-- Import Gazebo plugins -->
   <xacro:include filename="$(find yumi_description)/urdf/Gazebo/gazebo.urdf.xacro"/>
 
@@ -43,7 +46,15 @@
     <origin xyz="0 0 0.066" rpy="0.0 0.0 ${PI/2}" />
   </xacro:yumi_servo_gripper>
 
+  <!-- Surface piece -->
+ <xacro:yumi_fold_case name="fold_case" parent="gripper_r_base">
+   <origin xyz="0 0 0.21" rpy="0 0 0" />
+ </xacro:yumi_fold_case>
 
+ <!-- Rod piece -->
+ <xacro:yumi_rod name="rod_piece" parent="gripper_l_base">
+   <origin xyz="0 0 0.17" rpy="0 0 0" />
+ </xacro:yumi_rod>
 
 
 
