@@ -4,6 +4,7 @@
     <!-- URDF / SRDF parameters -->
     <arg name="ridgeback_config" default="base" />
     <arg name="use_traj" default="false"/>
+    <arg name="egm" default="true"/>
 
     <include file="$(find ridgeback_yumi_description)/launch/description.launch">
         <arg name="config" value="$(arg ridgeback_config)" />
@@ -12,6 +13,7 @@
 
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <rosparam file="$(find yumi_control)/config/ft_sensors_controllers.yaml" command="load" ns="/yumi"/>
+    <rosparam file="$(find yumi_hw)/config/egm_rws_config.yaml" command="load" ns="/yumi/yumi_hw" if="$(arg egm)"/>
     <group unless="$(arg use_traj)">
       <rosparam file="$(find yumi_control)/config/velocity_controllers.yaml" command="load" ns="/yumi"/>
       <arg name="arm_controllers" value="joint_state_controller
@@ -39,12 +41,11 @@
                                      joint_traj_vel_controller_r
                                      force_torque_sensor_controller"/>
      <node name="arm_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg arm_controllers)" ns="/yumi"/>
+     <param name="/yumi/yumi_hw/egm/pos_corr_gain" value="1.0"/>
     </group>
 
     <arg name="ip" default="192.168.125.1"/>
     <arg name="port" default="80"/>
-    <arg name="egm" default="true"/>
-    <rosparam file="$(find yumi_hw)/config/egm_rws_config.yaml" command="load" ns="/yumi/yumi_hw" if="$(arg egm)"/>
     <arg name="optodaq_pub_rate_hz" default="200.0"/>
     <arg name="optodaq_filter" default="4"/>
     <arg name="optodaq_cancel_bias" default="false"/>
