@@ -12,48 +12,37 @@
     <rosparam file="$(find yumi_control)/config/ft_sensors_controllers.yaml" command="load" ns="/yumi"/>
     <rosparam file="$(find yumi_hw)/config/egm_rws_config.yaml" command="load" ns="/yumi/yumi_hw"/>
 
-    <group unless="$(arg use_traj)">
-      <rosparam file="$(find yumi_control)/config/velocity_controllers.yaml" command="load" ns="/yumi"/>
-      <arg name="arm_controllers" default="joint_state_controller
-                                           joint_vel_controller_1_r
-                                           joint_vel_controller_2_r
-                                           joint_vel_controller_7_r
-                                           joint_vel_controller_3_r
-                                           joint_vel_controller_4_r
-                                           joint_vel_controller_5_r
-                                           joint_vel_controller_6_r
-                                           joint_vel_controller_1_l
-                                           joint_vel_controller_2_l
-                                           joint_vel_controller_7_l
-                                           joint_vel_controller_3_l
-                                           joint_vel_controller_4_l
-                                           joint_vel_controller_5_l
-                                           joint_vel_controller_6_l
-                                           force_torque_sensor_controller"/>
+    <rosparam unless="$(arg use_traj)" file="$(find yumi_control)/config/velocity_controllers.yaml" command="load" ns="/yumi"/>
+    <arg unless="$(arg use_traj)" name="arm_controllers" default="joint_state_controller
+                                         joint_vel_controller_1_r
+                                         joint_vel_controller_2_r
+                                         joint_vel_controller_7_r
+                                         joint_vel_controller_3_r
+                                         joint_vel_controller_4_r
+                                         joint_vel_controller_5_r
+                                         joint_vel_controller_6_r
+                                         joint_vel_controller_1_l
+                                         joint_vel_controller_2_l
+                                         joint_vel_controller_7_l
+                                         joint_vel_controller_3_l
+                                         joint_vel_controller_4_l
+                                         joint_vel_controller_5_l
+                                         joint_vel_controller_6_l
+                                         force_torque_sensor_controller"/>
 
-      <include file="$(find yumi_launch)/launch/yumi_base.launch">
-        <arg name="egm" value="true"/>
-        <arg name="arm_controllers" value="$(arg arm_controllers)"/>
-        <arg name="arms_hardware_interface" value=""/>
-        <arg name="use_rviz" value="false"/>
-        <arg name="load_description" value="false"/>
-      </include>
-    </group>
-    <group if="$(arg use_traj)">
-      <rosparam file="$(find yumi_control)/config/traj_controllers.yaml" command="load" ns="/yumi"/>
-      <arg name="arm_controllers" default="joint_state_controller
-                                           joint_traj_vel_controller_l
-                                           joint_traj_vel_controller_r
-                                           force_torque_sensor_controller"/>
+    <rosparam if="$(arg use_traj)" file="$(find yumi_control)/config/traj_controllers.yaml" command="load" ns="/yumi"/>
+    <arg if="$(arg use_traj)" name="arm_controllers" default="joint_state_controller
+                                         joint_traj_vel_controller_l
+                                         joint_traj_vel_controller_r
+                                         force_torque_sensor_controller"/>
 
-      <include file="$(find yumi_launch)/launch/yumi_base.launch">
-        <arg name="egm" value="true"/>
-        <arg name="arm_controllers" value="$(arg arm_controllers)"/>
-        <arg name="arms_hardware_interface" value=""/>
-        <arg name="use_rviz" value="false"/>
-        <arg name="load_description" value="false"/>
-      </include>
-    </group>
+    <include file="$(find yumi_launch)/launch/yumi_base.launch">
+      <arg name="egm" value="true"/>
+      <arg name="arm_controllers" value="$(arg arm_controllers)"/>
+      <arg name="arms_hardware_interface" value="VelocityJointInterface"/>
+      <arg name="use_rviz" value="false"/>
+      <arg name="load_description" value="false"/>
+    </include>
 
     <param name="use_gui" value="false"/>
     <arg name="mode" default="robot" />
